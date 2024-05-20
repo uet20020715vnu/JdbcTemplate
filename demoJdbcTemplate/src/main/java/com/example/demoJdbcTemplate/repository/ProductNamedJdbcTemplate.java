@@ -4,23 +4,28 @@ import com.example.demoJdbcTemplate.Entity.Product;
 import com.example.demoJdbcTemplate.dto.ProductDTO;
 import com.example.demoJdbcTemplate.rowmappers.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Repository("NamedJdbcTemplate")
 public class ProductNamedJdbcTemplate implements ProductDAO{
 
+    @Autowired
+    @Qualifier("CustomNameJdbcTemplate")
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-    @Autowired
-    public ProductNamedJdbcTemplate(NamedParameterJdbcTemplate namedJdbcTemplate){
-        this.namedJdbcTemplate = namedJdbcTemplate;
-    }
+//    @Autowired
+//    public ProductNamedJdbcTemplate(@Qualifier("ConnectMySql")DataSource dataSource){
+//        this.namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+//    }
 
     @Override
     public void addProduct(ProductDTO productDTO) {

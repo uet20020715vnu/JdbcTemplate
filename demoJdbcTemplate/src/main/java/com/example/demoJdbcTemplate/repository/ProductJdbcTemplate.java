@@ -4,6 +4,7 @@ import com.example.demoJdbcTemplate.Entity.Product;
 import com.example.demoJdbcTemplate.dto.ProductDTO;
 import com.example.demoJdbcTemplate.rowmappers.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,12 +21,14 @@ import java.util.List;
 @Repository("JdbcTemplate")
 public class ProductJdbcTemplate implements ProductDAO{
 
+    @Autowired
+    @Qualifier("CustomJdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private ProductJdbcTemplate(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
+//    @Autowired
+//    private ProductJdbcTemplate(@Qualifier("ConnectMySql") DataSource dataSource){
+//        this.jdbcTemplate = new JdbcTemplate(dataSource);
+//    }
 
     @Override
     public void addProduct(ProductDTO productDTO) {
